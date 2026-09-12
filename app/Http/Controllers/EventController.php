@@ -71,7 +71,7 @@ class EventController extends Controller
     {
         $upcomingEvents = Event::where('status', 'Upcoming')->get();
         $completeEvents = Event::where('status', 'Completed')->get();
-        $ongoingEvents = Event::whereDate('date_time', '=', now()->toDateString())->get();
+        $ongoingEvents = Event::whereBetween('date_time', [now()->startOfMonth(), now()->endOfMonth()])->get();
 
         return view('welcome', [
             'upcomingEvents' => $upcomingEvents,
